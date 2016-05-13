@@ -1,10 +1,10 @@
 {
     "name": "sukohi/csv-validator",
-    "description": "",
+    "description": "A Laravel package to validate csv data.",
     "authors": [
         {
             "name": "Sukohi",
-            "email": "capilano.whoops-report@gmail.com"
+            "email": "capilano.sukohi@gmail.com"
         }
     ],
     "license": "LGPL",
