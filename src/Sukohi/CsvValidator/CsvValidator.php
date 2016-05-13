@@ -9,7 +9,8 @@ class CsvValidator {
 		$this->csv_data = [];
 		$this->setRules($rules);
 
-		\Excel::load($csv_path, function($reader) {
+		$excel = \App::make('excel');
+		$excel->load($csv_path, function($reader) {
 
 			$reader->noHeading();
 			$csv_data = $reader->toArray();

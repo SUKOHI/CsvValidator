@@ -15,6 +15,7 @@ Register the service provider in app.php
 
     'providers' => [
         ...Others...,  
+        'Maatwebsite\Excel\ExcelServiceProvider', 
         'Sukohi\CsvValidator\CsvValidatorServiceProvider',
     ]
 
@@ -22,6 +23,7 @@ Also alias
 
     'aliases' => [
         ...Others...,  
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'CsvValidator' => 'Sukohi\CsvValidator\Facades\CsvValidator',
     ]
     
