@@ -7,6 +7,7 @@
             "email": "capilano.whoops-report@gmail.com"
         }
     ],
+    "license": "LGPL",
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",

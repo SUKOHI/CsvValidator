@@ -1,5 +1,6 @@
 # CsvValidator
 A Laravel package to validate csv data.
+(This is for Laravel 4.2. [For Laravel 5](https://github.com/SUKOHI/CsvValidator))
 
 # Requirements
 
@@ -134,8 +135,16 @@ e.g)
 
     }
 
+# CSV Settings
+
+You can set delimiter, enclosure and line_ending through `csv.php` that Laravel Excel can publish by executing the following command.
+
+    php artisan config:publish maatwebsite/excel
+
+See [here](http://www.maatwebsite.nl/laravel-excel/docs/getting-started) for the details.
+
 # License
 
-This package is licensed under the MIT License.
+This package is licensed under the LGPL License(following Laravel Excel).
 
 Copyright 2016 Sukohi Kuhoh
