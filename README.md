@@ -73,6 +73,12 @@ You can skip column like this.
         ]
     ]);
 
+# Retrieve
+
+You can access csv data by adding `_data` after attribute of csv file as follows.
+
+    $csv_data = $request->csv_file_data;    // when attribute is `csv_file`
+
 # Messages
 
 Attributes of error messages are like this.

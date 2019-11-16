@@ -43,6 +43,10 @@ class Csv implements Rule
             $csv_path = $csv_file->path();
             $csv_data = \FluentCsv::parse($csv_path, $this->encoding);
 
+            $request->merge([
+                $attribute .'_data' => $csv_data
+            ]);
+
             foreach($csv_data as $row_index => $row_data) {
 
                 $attribute_names = $this->getAttributeNames($row_index);
