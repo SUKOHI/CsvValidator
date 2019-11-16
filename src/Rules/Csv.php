@@ -35,12 +35,11 @@ class Csv implements Rule
     {
         $result = false;
         $request = request();
-        $csv_file = $request->file($attribute);
 
-        if($csv_file->isValid()) {
+        if($request->hasFile($attribute)) {
 
             $errors = [];
-            $csv_path = $csv_file->path();
+            $csv_path = $request->file($attribute)->path();
             $csv_data = \FluentCsv::parse($csv_path, $this->encoding);
 
             $request->merge([
