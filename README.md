@@ -1,150 +1,90 @@
 # CsvValidator
-A Laravel package to validate csv data.
-(This is for Laravel 5. [For Laravel 4.2](https://github.com/SUKOHI/CsvValidator/tree/1.0))
-
-# Requirements
-
-* "maatwebsite/excel": "~2.1.0"
+A Laravel package that allows to validate csv data.  
+This package is maintained under Laravel 5.7.  
 
 # Installation
 
-Execute composer command.
+Run this command.
 
-    composer require sukohi/csv-validator:2.*
-
-Register the service provider in app.php
-
-    'providers' => [
-        ...Others...,  
-        Maatwebsite\Excel\ExcelServiceProvider::class, 
-        Sukohi\CsvValidator\CsvValidatorServiceProvider::class,
-    ]
-
-Also alias
-
-    'aliases' => [
-        ...Others...,  
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'CsvValidator' => Sukohi\CsvValidator\Facades\CsvValidator::class,
-    ]
+    composer require sukohi/csv-validator:3.*
     
 # Basic usage
 
-    $csv_path = 'test.csv';
-    $rules = [
-        0 => 'required',
-        1 => 'required|integer',
-        2 => 'required|min:4'
-    ];
-    $csv_validator = CsvValidator::make($csv_path, $rules);
+You can use a rule called `Csv` as usual validation.  
+And all of the validation rules of Laravel is available for `$csv_rules` as follows.
+
+    <?php
     
-    if($csv_validator->fails()) {
+    namespace App\Http\Controllers;
     
-        $errors = $csv_validator->getErrors();
-
-    } else {
-
-        $csv_data = $csv_validator->getData();
-
+    use Illuminate\Http\Request;
+    use Sukohi\CsvValidator\Rules\Csv;
+    
+    class CsvValidatorController extends Controller
+    {
+        public function store(Request $request) {
+    
+            $csv_rules = [
+                0 => 'required',
+                1 => 'integer',
+                2 => 'required|min:10'
+            ];
+    
+            $request->validate([
+                'users_csv' => [
+                    new Csv($csv_rules) // <- here
+                ]
+            ]);
+    
+            // Do something..
+    
+        }
     }
-    
-
-# Rules
-
-You can set keys instead of indexes like so.
-
-    $rules = [
-        'Product Title' => 'required',
-        'Product No.' => 'required',
-        'Position' => 'required'
-    ];
-
-In this case, the first row of the CSV need to have `Product Title`, `Product No.` and `Position`.  
-And This keys will be used as attribute names for error message.
-
-* [See](https://laravel.com/docs/5.2/validation#available-validation-rules) the details of the rules. 
-
-# Attribute names for error message
-
-If you set indexes for rules like so.
-
-    $rules = [
-        0 => 'required',
-        1 => 'required|integer',
-        2 => 'required|min:4'
-    ];
-    
-You can set attribute names before calling fails() like this.
-
-    $csv_validator->setAttributeNames([
-        0 => 'Product Title',
-        1 => 'Product No.',
-        2 => 'Position'
-    ]);
 
 # Encoding
 
-You can set a specific encoding as the 3rd argument.(Default: UTF-8)
+You can set a specific encoding to convert csv data.
 
-    CsvValidator::make($csv_path, $rules, 'SJIS-win');
+    $csv_rules = [
+        0 => 'required',
+        1 => 'integer',
+        2 => 'required|min:10'
+    ];
+    $from_encoding = 'sjis-win';
 
-# Error messages
+    $request->validate([
+        'csv_file' => [
+            new Csv($csv_rules, $from_encoding)
+        ]
+    ]);
 
-You can get error messages after calling fails().
+# Csv rules
 
-    $errors = $csv_validator->getErrors();
-    
-    foreach ($errors as $row_index => $error) {
-    
-        foreach ($error as $col_index => $messages) {
-    
-            echo 'Row '. $row_index .', Col '.$col_index .': '. implode(',', $messages) .'<br>';
-    
-        }
-    
-    }
+You can skip column like this.
 
-# CSV data
+    $csv_rules = [
+        0 => 'required',
+        3 => 'required|min:10'
+    ];
 
-You also can get CSV data after calling fails().
+    $request->validate([
+        'csv_file' => [
+            new Csv($csv_rules)
+        ]
+    ]);
 
-    $csv_data = $csv_validator->getData();
+# Messages
 
-# Exception
+Attributes of error messages are like this.
 
-In the case of the below, you must receive Exception.
-
-* Your CSV does not have any data.
-* Heading key not found.
-
-e.g)
-
-    try {
-
-        $csv_validator = CsvValidator::make($csv_path, $rules, $encoding);
-
-        if($csv_validator->fails()) {
-
-            // Do something..
-
-        }
-
-    } catch (\Exception $e) {
-
-        echo $e->getMessage();
-
-    }
-
-# CSV Settings
-
-You can set delimiter, enclosure and line_ending through `excel.php` that Laravel Excel can publish by executing the following command.
-
-    php artisan vendor:publish
-
-See [here](http://www.maatwebsite.nl/laravel-excel/docs/getting-started) for the details.
+    The A1 field is required.
+    The C1 field is required.
+    The C2 must be at least 10 characters.
+    The C3 must be at least 10 characters.
+    The C4 field is required.
 
 # License
 
-This package is licensed under the LGPL License(following Laravel Excel).
+This package is licensed under the MIT License.
 
-Copyright 2016 Sukohi Kuhoh
+Copyright 2019 Sukohi Kuhoh

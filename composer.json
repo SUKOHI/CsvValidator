@@ -1,16 +1,16 @@
 {
     "name": "sukohi/csv-validator",
-    "description": "A Laravel package to validate csv data.",
+    "description": "A Laravel package that allows you to validate csv data.",
     "authors": [
         {
             "name": "Sukohi",
             "email": "capilano.sukohi@gmail.com"
         }
     ],
-    "license": "LGPL",
+    "license": "MIT",
     "require": {
-        "laravel/framework": "~5.0",
-        "maatwebsite/excel": "~2.1.0"
+        "illuminate/support": "^5.7|^6.0",
+        "sukohi/fluent-csv": "^3.0"
     },
     "autoload": {
         "psr-4": {
