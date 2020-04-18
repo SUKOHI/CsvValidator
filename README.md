@@ -41,6 +41,36 @@ And all of the validation rules of Laravel is available for `$csv_rules` as foll
         }
     }
 
+# Skipping the first row (column headings) of the validation rules
+
+    <?php
+        
+        namespace App\Http\Controllers;
+        
+        use Illuminate\Http\Request;
+        use Sukohi\CsvValidator\Rules\Csv;
+        
+        class CsvValidatorController extends Controller
+        {
+            public function store(Request $request) {
+        
+                $csv_rules = [
+                    0 => 'required',
+                    1 => 'integer',
+                    2 => 'required|min:10'
+                ];
+        
+                $request->validate([
+                    'users_csv' => [
+                        new Csv($csv_rules, '', 1) // <- Starting validation from row one, not zero
+                    ]
+                ]);
+        
+                // Do something..
+        
+            }
+        }
+
 # Encoding
 
 You can set a specific encoding to convert csv data.
@@ -93,4 +123,4 @@ Attributes of error messages are like this.
 
 This package is licensed under the MIT License.
 
-Copyright 2019 Sukohi Kuhoh
+Copyright 2020 Sukohi Kuhoh

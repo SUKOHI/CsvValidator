@@ -10,18 +10,21 @@ class Csv implements Rule
     private $rules = [];
     private $encoding = '';
     private $error_messages = [];
+    private $start_from_row_index = 0;
 
     /**
      * Create a new rule instance.
      *
      * @param  array  $rules
      * @param  string  $encoding
+     * @param int $start_from_row_index
      * @return void
      */
-    public function __construct($rules, $encoding = '')
+    public function __construct($rules, $encoding = '', int $start_from_row_index = 0)
     {
         $this->rules = $rules;
         $this->encoding = $encoding;
+        $this->start_from_row_index = $start_from_row_index;
     }
 
     /**
@@ -47,7 +50,7 @@ class Csv implements Rule
             ]);
 
             foreach($csv_data as $row_index => $row_data) {
-
+                if ($row_index < $this->start_from_row_index) continue;
                 $attribute_names = $this->getAttributeNames($row_index);
                 $validator = \Validator::make(
                     $this->getFilteredRowData($row_data),
