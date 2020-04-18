@@ -1,5 +1,5 @@
 # CsvValidator
-A Laravel package that allows to validate csv data.  
+A Laravel package that allows you to validate csv data.  
 This package is maintained under Laravel 5.7.  
 
 # Installation
@@ -11,7 +11,7 @@ Run this command.
 # Basic usage
 
 You can use a rule called `Csv` as usual validation.  
-And all of the validation rules of Laravel is available for `$csv_rules` as follows.
+And all the validation rules of Laravel is available for `$csv_rules` as follows.
 
     <?php
     
@@ -41,52 +41,32 @@ And all of the validation rules of Laravel is available for `$csv_rules` as foll
         }
     }
 
-# Skipping the first row (column headings) of the validation rules
-
-    <?php
-        
-        namespace App\Http\Controllers;
-        
-        use Illuminate\Http\Request;
-        use Sukohi\CsvValidator\Rules\Csv;
-        
-        class CsvValidatorController extends Controller
-        {
-            public function store(Request $request) {
-        
-                $csv_rules = [
-                    0 => 'required',
-                    1 => 'integer',
-                    2 => 'required|min:10'
-                ];
-        
-                $request->validate([
-                    'users_csv' => [
-                        new Csv($csv_rules, '', 1) // <- Starting validation from row one, not zero
-                    ]
-                ]);
-        
-                // Do something..
-        
-            }
-        }
-
-# Encoding
-
-You can set a specific encoding to convert csv data.
+# with Options
 
     $csv_rules = [
         0 => 'required',
         1 => 'integer',
         2 => 'required|min:10'
     ];
-    $from_encoding = 'sjis-win';
+    $options = [
+        'encoding' => 'sjsin-win',
+        'start_row' => 1,   // <- Starting validation from row one, not zero
+        'end_row' => 4,     // <- Ending validation
+        'row_callback' => function($row_number, $row_data) {
 
+            return true;    // `false` means skipping validation
+
+        }
+    ];
     $request->validate([
         'csv_file' => [
-            new Csv($csv_rules, $from_encoding)
+            new Csv($csv_rules, $options)
         ]
     ]);
+
+***Note***: The former coding is also available.
+
+    new Csv($csv_rules, 'sjis-win')
 
 # Csv rules
 
@@ -118,6 +98,11 @@ Attributes of error messages are like this.
     The C2 must be at least 10 characters.
     The C3 must be at least 10 characters.
     The C4 field is required.
+
+# Contributor
+Thank you for your contributions!
+
+* [Hugo Leon](https://github.com/hugoleon46)
 
 # License
 
