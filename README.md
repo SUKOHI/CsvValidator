@@ -50,7 +50,7 @@ And all the validation rules of Laravel is available for `$csv_rules` as follows
     ];
     $options = [
         'encoding' => 'sjsin-win',
-        'start_row' => 1,   // <- Starting validation from row one, not zero
+        'start_row' => 1,   // <- Starting validation from row one, not zero. (*1)
         'end_row' => 4,     // <- Ending validation
         'row_callback' => function($row_number, $row_data) {
 
@@ -63,6 +63,8 @@ And all the validation rules of Laravel is available for `$csv_rules` as follows
             new Csv($csv_rules, $options)
         ]
     ]);
+
+(*1) For example, if you don't want to validate the header row, it means the first row, set `2` here.
 
 ***Note***: The former coding is also available.
 
