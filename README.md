@@ -1,6 +1,6 @@
 # CsvValidator
 A Laravel package that allows you to validate csv data.  
-This package is maintained under Laravel 5.7.  
+This package is compatible with Laravel 5.7 -> 8.X  
 
 # Installation
 
