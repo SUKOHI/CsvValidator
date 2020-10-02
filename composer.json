@@ -9,7 +9,7 @@
     ],
     "license": "MIT",
     "require": {
-        "illuminate/support": "^5.7|^6.0|^7.0",
+        "illuminate/support": "^5.7|^6.0|^7.0|^8.0",
         "sukohi/fluent-csv": "^3.0"
     },
     "autoload": {
